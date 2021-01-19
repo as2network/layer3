@@ -2,7 +2,7 @@
  * Supported channel types
  */
 export enum ChannelType {
-    None = "none",
-    Kitsune = "kitsune",
-    Raiden = "raiden"
+  None = "none",
+  Kitsune = "kitsune",
+  Raiden = "raiden",
 }

@@ -4,9 +4,9 @@ import uuid from "uuid/v4";
 const REQUEST_ID = "requestId";
 
 export const setRequestId = () => {
-    return httpContext.set(REQUEST_ID, uuid());
-}
+  return httpContext.set(REQUEST_ID, uuid());
+};
 
 export const getRequestId = () => {
-    return httpContext.get(REQUEST_ID) as string;
-}
+  return httpContext.get(REQUEST_ID) as string;
+};

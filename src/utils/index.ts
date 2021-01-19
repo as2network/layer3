@@ -8,7 +8,7 @@ export { validateProvider, getJsonRPCProvider } from "./ethers";
  * @param milliseconds
  */
 export const wait = (milliseconds: number) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
 /**
@@ -23,41 +23,53 @@ export const wait = (milliseconds: number) => {
  * Thus, a reference to the original promise should be kept and it is the one that should be cancelled.
  */
 export class CancellablePromise<T> extends Promise<T> {
-    constructor(
-        executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void,
-        private canceller?: () => void
-    ) {
-        super(executor);
-    }
+  constructor(
+    executor: (
+      resolve: (value?: T | PromiseLike<T>) => void,
+      reject: (reason?: any) => void
+    ) => void,
+    private canceller?: () => void
+  ) {
+    super(executor);
+  }
 
-    /**
-     * If a canceller was provided in the constructor, it calls it. Then it sets `cancelled` to true.
-     */
-    public cancel() {
-        this.canceller && this.canceller();
-    }
+  /**
+   * If a canceller was provided in the constructor, it calls it. Then it sets `cancelled` to true.
+   */
+  public cancel() {
+    this.canceller && this.canceller();
+  }
 }
 
 // generalizes the events interface of both the EventEmitter and ethers.providers.BaseProvider
 interface EventEmitterLike<TEvent> {
-    once(event: TEvent, listener: (...args: any) => void): EventEmitterLike<TEvent>;
-    removeListener(event: TEvent, listener: (...args: any) => void): EventEmitterLike<TEvent>;
+  once(
+    event: TEvent,
+    listener: (...args: any) => void
+  ): EventEmitterLike<TEvent>;
+  removeListener(
+    event: TEvent,
+    listener: (...args: any) => void
+  ): EventEmitterLike<TEvent>;
 }
 
 /**
  * Returns a CancellablePromise that resolves as soon as an event is fired for the first time.
  * It resolves to the array arguments of the event handler's call.
  **/
-export function waitForEvent<T>(emitter: EventEmitterLike<T>, event: T): CancellablePromise<any[]> {
-    const cancellerInfo: { handler?: () => void } = {};
+export function waitForEvent<T>(
+  emitter: EventEmitterLike<T>,
+  event: T
+): CancellablePromise<any[]> {
+  const cancellerInfo: { handler?: () => void } = {};
 
-    const canceller = () => emitter.removeListener(event, cancellerInfo.handler!);
+  const canceller = () => emitter.removeListener(event, cancellerInfo.handler!);
 
-    return new CancellablePromise<any[]>(resolve => {
-        const handler = (...args: any[]) => resolve(args);
-        cancellerInfo.handler = handler;
-        emitter.once(event, handler);
-    }, canceller);
+  return new CancellablePromise<any[]>((resolve) => {
+    const handler = (...args: any[]) => resolve(args);
+    cancellerInfo.handler = handler;
+    emitter.once(event, handler);
+  }, canceller);
 }
 
 /**
@@ -67,18 +79,18 @@ export function waitForEvent<T>(emitter: EventEmitterLike<T>, event: T): Cancell
  * @param cancellables
  */
 export function cancellablePromiseRace(
-    promises: Iterable<Promise<any>>,
-    cancellables: Iterable<CancellablePromise<any>>
+  promises: Iterable<Promise<any>>,
+  cancellables: Iterable<CancellablePromise<any>>
 ) {
-    const canceller = () => {
-        for (const p of cancellables) p.cancel();
-    };
-    return new CancellablePromise((resolve, reject) => {
-        Promise.race(promises)
-            .then(resolve)
-            .catch(reason => reject(reason))
-            .finally(canceller);
-    }, canceller);
+  const canceller = () => {
+    for (const p of cancellables) p.cancel();
+  };
+  return new CancellablePromise((resolve, reject) => {
+    Promise.race(promises)
+      .then(resolve)
+      .catch((reason) => reject(reason))
+      .finally(canceller);
+  }, canceller);
 }
 
 /**
@@ -87,15 +99,18 @@ export function cancellablePromiseRace(
  * @param promise the original promise
  * @param milliseconds the amount of milliseconds before the returned promise is rejected
  */
-export function promiseTimeout<T>(promise: Promise<T>, milliseconds: number): Promise<T> {
-    return Promise.race([
-        promise,
-        new Promise<T>((_, reject) => {
-            setTimeout(() => {
-                reject(new TimeoutError("Timed out in " + milliseconds + "ms."));
-            }, milliseconds);
-        })
-    ]);
+export function promiseTimeout<T>(
+  promise: Promise<T>,
+  milliseconds: number
+): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(() => {
+        reject(new TimeoutError("Timed out in " + milliseconds + "ms."));
+      }, milliseconds);
+    }),
+  ]);
 }
 
 /**
@@ -106,5 +121,5 @@ export function promiseTimeout<T>(promise: Promise<T>, milliseconds: number): Pr
  * @param [plural] the string to be used as plural; defaults to `word + 's'`.
  */
 export function plural(val: number, word: string, plural: string = word + "s") {
-    return val == 1 ? word : plural;
+  return val == 1 ? word : plural;
 }

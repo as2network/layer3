@@ -34,21 +34,14 @@
   "ast": {
     "absolutePath": "/home/chris/dev/pisa/statechannels/contracts/StateChannelFactory.sol",
     "exportedSymbols": {
-      "StateChannelFactory": [
-        8373
-      ]
+      "StateChannelFactory": [8373]
     },
     "id": 8374,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 8354,
-        "literals": [
-          "solidity",
-          "^",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "^", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:24:5"
       },
@@ -65,16 +58,12 @@
       },
       {
         "baseContracts": [],
-        "contractDependencies": [
-          8352
-        ],
+        "contractDependencies": [8352],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 8373,
-        "linearizedBaseContracts": [
-          8373
-        ],
+        "linearizedBaseContracts": [8373],
         "name": "StateChannelFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -298,21 +287,14 @@
   "legacyAST": {
     "absolutePath": "/home/chris/dev/pisa/statechannels/contracts/StateChannelFactory.sol",
     "exportedSymbols": {
-      "StateChannelFactory": [
-        8373
-      ]
+      "StateChannelFactory": [8373]
     },
     "id": 8374,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 8354,
-        "literals": [
-          "solidity",
-          "^",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "^", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:24:5"
       },
@@ -329,16 +311,12 @@
       },
       {
         "baseContracts": [],
-        "contractDependencies": [
-          8352
-        ],
+        "contractDependencies": [8352],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 8373,
-        "linearizedBaseContracts": [
-          8373
-        ],
+        "linearizedBaseContracts": [8373],
         "name": "StateChannelFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
